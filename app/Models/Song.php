@@ -16,5 +16,6 @@ class Song extends Model
         'artist',
         'duration',
         'year',
+        'img',
     ];
 }

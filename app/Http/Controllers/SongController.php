@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SongRequest;
 use App\Models\Song;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class SongController extends Controller
         return view('song.create');
     }
 
-    public function store(Request $request){
+    public function store(SongRequest $request){
         
         
         
@@ -40,6 +41,7 @@ $song = Song::create([
     'artist' => $request->artist,
     'duration' => $request->duration,
     'year' => $request->year,
+    'img' => $request->file('img')->store('public/img'),
 ]);
 
 
