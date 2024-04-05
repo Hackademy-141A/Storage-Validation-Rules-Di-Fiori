@@ -1,4 +1,4 @@
-let songName = document.querySelector('#songName');
+let songName = document.querySelector('#songName');         
 
 
    songName?.addEventListener('input',()=>{
