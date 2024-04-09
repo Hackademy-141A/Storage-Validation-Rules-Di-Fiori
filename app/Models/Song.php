@@ -17,5 +17,10 @@ class Song extends Model
         'duration',
         'year',
         'img',
+        'album_id',
     ];
+    public function album()
+    {
+        return $this->belongsTo(Album::class);
+    }
 }

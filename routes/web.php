@@ -4,6 +4,7 @@ use App\Http\Controllers\AlbumController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\PublicController;
+use App\Models\Album;
 use App\Models\Song;
 
 /*
@@ -27,9 +28,13 @@ Route::get('/song/index', [SongController::class, 'index'])->name('song.index');
 
 
 
+Route::prefix('album')->group(function(){
 
-Route::get('/album/create' , [AlbumController::class, 'create'])->name('album.create');
-Route::POST('/album/store' , [AlbumController::class, 'store'])->name('album.store');
-Route::get('/album/index' , [AlbumController::class, 'index'])->name('album.index');
-
-Route::get('/album/show/(album)' ,[AlbumController::class, 'show'])->name('album.show');
+Route::get('/create' , [AlbumController::class, 'create'])->name('album.create');
+Route::POST('/store' , [AlbumController::class, 'store'])->name('album.store');
+Route::get('/index' , [AlbumController::class, 'index'])->name('album.index');
+Route::get('/show/{album}' ,[AlbumController::class, 'show'])->name('album.show');
+Route::get('/edit/{album}' ,[AlbumController::class, 'edit'])->name('album.edit');
+Route::put('/update/{album}' , [AlbumController::class, 'update'])->name('album.update');
+Route::delete('/delete/{album}', [AlbumController::class, 'destroy'])->name('album.delete');
+});

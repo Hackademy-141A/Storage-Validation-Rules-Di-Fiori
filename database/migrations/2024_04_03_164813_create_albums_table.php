@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('albums', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('artist');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('img')->default('/img/no.web.png');
             $table->integer('year');
             $table->integer('NumberOfSongs');

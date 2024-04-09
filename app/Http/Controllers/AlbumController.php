@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AlbumController extends Controller
 {
@@ -41,7 +43,7 @@ $this->middleware('auth')->except('index','show');
 
         Album::create([
             'name' => $request->name,
-            'artist' => $request->artist,
+            'user_id' => Auth::user()->id,
             'year' => $request->year,
             'NumberOfSongs' =>$request->NumberOfSongs,
             'img' =>$request->file('img')->store('public/img'),
@@ -64,7 +66,7 @@ $this->middleware('auth')->except('index','show');
      */
     public function edit(Album $album)
     {
-        //
+        return view('album.edit' , compact('album')); 
     }
 
     /**
@@ -72,7 +74,19 @@ $this->middleware('auth')->except('index','show');
      */
     public function update(Request $request, Album $album)
     {
-        //
+        $album->update([
+
+            'name'=> $request->name,
+            'artist' => $request->artist,
+            'year' => $request->year,
+            'NumberOfSongs' =>$request->NumberOfSongs,
+        ]);
+        if($request->img){
+            $album->update([
+                'img'=> $request->file('img')->store('public/img')
+            ]);
+        }
+        return redirect(route('album.index'))->with('message', 'album modificato,bravo');
     }
 
     /**
@@ -80,6 +94,8 @@ $this->middleware('auth')->except('index','show');
      */
     public function destroy(Album $album)
     {
-        //
+        Storage::delete(($album->img));
+        $album->delete();
+        return redirect(route('album.index'))->with('message', 'album eliminato,bravo');
     }
 }
